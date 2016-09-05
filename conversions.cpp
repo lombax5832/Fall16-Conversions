@@ -17,6 +17,7 @@ void int2str(int, char[], int);
 void int2str(int, char[], int, int);
 void addCharToStr(char, char[], int);
 int char2int(char);
+int strCharLocation(const char[], char, int);
 
 /*
 	Description:	Convert an integer into a string
@@ -43,11 +44,17 @@ void int2str(int input, char output[], int position, int strLength) {
 }
 
 int str2int(const char input[]) {
-	int i = 0, sign = 1, output = 0;
+	int i = 0; //Counter for what index we are processing in the string
+	int sign = 1; //Tracks value of the sign
+	int output = 0; //Value of the output as we process the string
+	
+	//Check to see if the first char is a '-'. If so, then make sign -1
 	if (input[i] == '-') {
 		sign = -sign;
 		i++;
 	}
+
+	//Run this loop as long as the next char represents a numerical value
 	while ((input[i] >= ASCII_0) && (input[i] <= ASCII_9)) {
 		
 		if (output > 0) {
@@ -60,22 +67,25 @@ int str2int(const char input[]) {
 }
 
 void double2str(double input, char output[]) {
-	int beforeDec = 0; // Numbers before decimal place
-	int digBeforeDec = 0; // Number of digits before the decimal place
-	double afterDec = 0; // Numbers after decimal place
+	int beforeDec = 0; //Numbers before decimal place
+	int digBeforeDec = 0; //Number of digits before the decimal place
+	double afterDec = 0; //Numbers after decimal place
 
-	// Add negative sign if necessary
+	//Add negative sign if necessary
 	if (input < 0.0) {
 		input = abs(input);
 		addCharToStr('-', output, MAX_DOUBLE_STRING_LENGTH);
 	}
 
+	//Assign input to beforeDec, which will only assign the numbers before the decimal point
 	beforeDec = input;
+	//Now, subtract beforeDec from input, which will only get rid of numbers after decimal point
 	afterDec = input - (double)beforeDec;
 
-	int2str(beforeDec, output, MAX_DOUBLE_STRING_LENGTH); // Add numbers before decimal place to string
-	addCharToStr('.', output, MAX_DOUBLE_STRING_LENGTH); // Add decimal place to string
+	int2str(beforeDec, output, MAX_DOUBLE_STRING_LENGTH); //Add numbers before decimal place to string
+	addCharToStr('.', output, MAX_DOUBLE_STRING_LENGTH); //Add decimal place to string
 
+	//We use the based ten logarithm function to get the number of digits in a number
 	digBeforeDec = max((int)(log10(input) + 1), 1);
 
 	for (int i = digBeforeDec; i < MAX_DOUBLE_STRING_LENGTH - 2; i++) {
@@ -83,6 +93,33 @@ void double2str(double input, char output[]) {
 		addCharToStr((int)afterDec + ASCII_0, output, MAX_DOUBLE_STRING_LENGTH);
 		afterDec -= (int)afterDec;
 	}
+}
+
+double str2double(const char input[]) {
+	double output = 0.0;
+	int decimalIndex = 0;
+	int sign = 1;
+	int tempInt = 0;
+
+	if (input[0] == '-') {
+		sign = -sign;
+	}
+
+	output = str2int(input);
+	decimalIndex = strCharLocation(input, '.', MAX_DOUBLE_STRING_LENGTH);
+
+	if (decimalIndex > -1) {
+		for (int i = 1; i < (MAX_DOUBLE_STRING_LENGTH - decimalIndex); i++) {
+			tempInt = char2int(input[decimalIndex + i]);
+			if (tempInt > 0) {
+				output += sign*pow(10.0, -i)*tempInt;
+			}
+			else {
+				break;
+			}
+		}
+	}
+	return output;
 }
 
 /*
@@ -122,7 +159,7 @@ int char2int(char input) {
 	if ((input >= ASCII_0) && (input <= ASCII_9)) {
 		return input - ASCII_0;
 	}
-	return 0;
+	return -1;
 }
 
 void int2str(int input, char output[]) {
@@ -140,4 +177,24 @@ void int2str(int input, char output[], int strLength) {
 
 	length = log10(input);
 	int2str(input, output, pow(10, length), strLength);
+}
+
+/*
+	Description:	Return whether or not 
+	Pre:			Valid character array with a null character terminator
+	Post:			Returns true or false based on if comparison was found in input
+	Parameters:		
+					input: character array to search for char in
+					comparison: char to search for in array
+					length: length of character array
+*/
+int strCharLocation(const char input[], char comparison, int length) {
+	for (int i = 0; i < length; i++) {
+		if (input[i] == '\0') {
+			break;
+		} else if (input[i] == comparison) {
+			return i;
+		}
+	}
+	return -1;
 }

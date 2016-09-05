@@ -46,3 +46,13 @@ int str2int(const char input[]);
 					output: char array to insert characters into
 */
 void double2str(double input, char output[]);
+
+/*
+	Description:	Convert an string into a double
+	Pre:			Valid String
+					Sufficiently Large char Array
+	Post:			Returned value will include all numerical characters until the null character
+	Parameters:		
+					input: char array to convert to a double
+*/
+double str2double(const char[]);

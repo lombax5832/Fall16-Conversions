@@ -10,12 +10,10 @@ int main() {
 	while (true) {
 		conv = 0.0;
 		temp[0]='\0';
-		cin >> conv;
-		conv = conv;
+		cin >> temp;
 		cin.clear();
-		double2str(conv, temp);
 
-		cout << "String: " << temp << endl;		
+		cout << "Double: " << str2double(temp) << endl;		
 	}
 
 	return 0;
