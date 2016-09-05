@@ -8,10 +8,12 @@
 *	Date Modified:	9/3/16
 */
 
-// Maximum amount of characters need to store an integer, including null char & sign
+// Maximum amount of characters need to store an integer or double, including null char & sign
 const int MAX_INT_STRING_LENGTH = 12;
-// Offset of decimal digits to ascii value
-const int DIGIT_TO_ASCII_OFFSET = 48;
+const int MAX_DOUBLE_STRING_LENGTH = 25;
+// ASCII value of 0 and 9
+const int ASCII_0 = 48;
+const int ASCII_9 = 57;
 
 /*
 	Description:	Convert an integer into a string
@@ -23,3 +25,24 @@ const int DIGIT_TO_ASCII_OFFSET = 48;
 					output: char array to insert characters into
 */
 void int2str(int input, char output[]);
+
+/*
+	Description:	Return an integer from given string
+	Pre:			Valid String
+					Sufficiently Large char Array
+	Post:			Returned value will include all numerical characters until the null character
+	Parameters:		
+					input: char array to convert to an int
+*/
+int str2int(const char input[]);
+
+/*
+	Description:	Convert an double into a string
+	Pre:			Valid Double
+					Sufficiently Large char Array
+	Post:			Char array will be a string that prints the double in scientific notation
+	Parameters:		
+					input: double to convert to string
+					output: char array to insert characters into
+*/
+void double2str(double input, char output[]);

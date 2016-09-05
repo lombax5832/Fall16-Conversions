@@ -15,6 +15,7 @@ using namespace std;
 
 void int2str(int, char[], int);
 void addCharToStr(char, char[], int);
+int char2int(char);
 
 void int2str(int input, char output[]) {
 
@@ -22,7 +23,7 @@ void int2str(int input, char output[]) {
 
 	if (input < 0) {
 		addCharToStr('-', output, MAX_INT_STRING_LENGTH);
-		input = -input;
+		input = abs(input);
 	}
 
 	length = log10(input);
@@ -42,14 +43,47 @@ void int2str(int input, char output[]) {
 void int2str(int input, char output[], int position) {
 	char temp = ' '; //Temporary char to hold the ascii value of the first digit of the passed input
 	position = max(position, 1); //Prevents dividing by 0
-	temp = (input / position) + DIGIT_TO_ASCII_OFFSET; //Sets temp equal to the ascii code the first digit
+	temp = (input / position) + ASCII_0; //Sets temp equal to the ascii code the first digit
 	addCharToStr(temp, output, MAX_INT_STRING_LENGTH); //Add temp to the end of the output string
 	input %= position; //Remove the first digit from input
 	position /= 10; //Move one digit lower
 
 	//Repeat as long as we still have more digits to concatenate
-	if (input != 0) {
+	if (position != 0) {
 		int2str(input, output, position);
+	}
+}
+
+int str2int(const char input[]) {
+	int i = 0, sign = 1, output = 0;
+	if (input[i] == '-') {
+		sign = -sign;
+		i++;
+	}
+	while ((input[i] >= ASCII_0) && (input[i] <= ASCII_9)) {
+		
+		if (output > 0) {
+			output *= 10;
+		}
+		output += char2int(input[i]);
+		i++;
+	}
+	return sign*output;
+}
+
+void double2str(double input, char output[]) {
+	int power = 0, sign = 1;
+	if (input < 0.0) {
+		input = -input;
+		
+	}
+	while ((input < 1.0) || (input > 10.0)) {
+		if (input < 1.0) {
+
+		}
+		else {
+
+		}
 	}
 }
 
@@ -76,7 +110,19 @@ void addCharToStr(char input, char output[], int length) {
 			output[i + 1] = '\0';
 			break;
 		}
-
 	}
+}
 
+/*
+	Description:	Return a signle digit int equal to the char that represents it
+	Pre:			Valid character to change to an int
+	Post:			Char will be converted into the digit it represents as an int
+	Parameters:		
+					input: char to change to an int
+*/
+int char2int(char input) {
+	if ((input >= ASCII_0) && (input <= ASCII_9)) {
+		return input - ASCII_0;
+	}
+	return 0;
 }

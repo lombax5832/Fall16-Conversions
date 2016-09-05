@@ -5,11 +5,18 @@ using namespace std;
 
 int main() {
 	char temp[MAX_INT_STRING_LENGTH] = "";
-	int conv = 1345098027;
+	int conv;	
 
-	int2str(conv, temp);
+	while (true) {
+		conv = 0;
+		temp[0]='\0';
+		cin >> conv;
+		conv = (int)conv;
+		cin.clear();
+		int2str(conv, temp);
 
-	cout << temp << endl;
+		cout << "String: " << temp << endl;		
+	}
 
 	return 0;
 }
