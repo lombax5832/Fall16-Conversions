@@ -18,6 +18,7 @@ void int2str(int, char[], int, int);
 void addCharToStr(char, char[], int);
 int char2int(char);
 int strCharLocation(const char[], char, int);
+bool checkIdentifierFirstChar(char);
 
 /*
 	Description:	Convert an integer into a string
@@ -96,18 +97,23 @@ void double2str(double input, char output[]) {
 }
 
 double str2double(const char input[]) {
-	double output = 0.0;
-	int decimalIndex = 0;
-	int sign = 1;
-	int tempInt = 0;
+	double output = 0.0; //Value of output as we are modifying it
+	int decimalIndex = 0; //Index in the array of the decimal point
+	int sign = 1; //Current sign value of the double
+	int tempInt = 0; //Each decimal value we are adding separately
 
+	//If the string has a negative sign in the first index, it is a negative
 	if (input[0] == '-') {
 		sign = -sign;
 	}
 
+	//We use our old str2int function to process everything before the decimal
 	output = str2int(input);
+
+	//Figure out where the decimal point is
 	decimalIndex = strCharLocation(input, '.', MAX_DOUBLE_STRING_LENGTH);
 
+	//Process each number after the decimal separately
 	if (decimalIndex > -1) {
 		for (int i = 1; i < (MAX_DOUBLE_STRING_LENGTH - decimalIndex); i++) {
 			tempInt = char2int(input[decimalIndex + i]);
@@ -120,6 +126,24 @@ double str2double(const char input[]) {
 		}
 	}
 	return output;
+}
+
+bool isIdentifier(const char input[]) {
+	int i = 1; //Current index we are processing in the string
+	
+	//See if the first character is a letter or underscore
+	if (!checkIdentifierFirstChar(input[0])) {
+		return false;
+	}
+
+	//Every other letter must be a number, letter, or underscore
+	while (input[i] != '\0') {
+		if (!checkIdentifierFirstChar(input[i]) && !(char2int(input[i]) != -1)) {
+			return false;
+		}
+		i++;
+	}
+	return true;
 }
 
 /*
@@ -180,7 +204,7 @@ void int2str(int input, char output[], int strLength) {
 }
 
 /*
-	Description:	Return whether or not 
+	Description:	Return the index that we find a given char in
 	Pre:			Valid character array with a null character terminator
 	Post:			Returns true or false based on if comparison was found in input
 	Parameters:		
@@ -197,4 +221,18 @@ int strCharLocation(const char input[], char comparison, int length) {
 		}
 	}
 	return -1;
+}
+
+/*
+	Description:	Check to see if the given char is a valid first char in an identifier
+	Pre:			initialized char
+	Post:			Returns true or false based on if the char is a valid first char in an identifier
+	Parameters:		
+					input: char to validate for being the first char in an identifier
+*/
+bool checkIdentifierFirstChar(char input) {
+	return (
+		((input >= ASCII_A) && (input <= ASCII_A + 25)) || 
+		((input >= ASCII_LOWERCASE_A) && (input <= ASCII_LOWERCASE_A + 25)) || 
+		input == ASCII_UNDERSCORE);
 }

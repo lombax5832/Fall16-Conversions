@@ -4,7 +4,7 @@ using namespace std;
 #include "conversions.h"
 
 int main() {
-	char temp[MAX_DOUBLE_STRING_LENGTH] = "";
+	char temp[64];
 	double conv;	
 
 	while (true) {
@@ -13,7 +13,7 @@ int main() {
 		cin >> temp;
 		cin.clear();
 
-		cout << "Double: " << str2double(temp) << endl;		
+		cout << "Is Identifier: " << isIdentifier(temp) << endl;		
 	}
 
 	return 0;

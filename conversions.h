@@ -11,9 +11,12 @@
 // Maximum amount of characters need to store an integer or double, including null char, sign & decimal
 const int MAX_INT_STRING_LENGTH = 12;
 const int MAX_DOUBLE_STRING_LENGTH = 20;
-// ASCII value of 0 and 9
+// ASCII values of certain characters
 const int ASCII_0 = 48;
 const int ASCII_9 = 57;
+const int ASCII_A = 65;
+const int ASCII_UNDERSCORE = 95;
+const int ASCII_LOWERCASE_A = 97;
 
 /*
 	Description:	Convert an integer into a string
@@ -56,3 +59,12 @@ void double2str(double input, char output[]);
 					input: char array to convert to a double
 */
 double str2double(const char[]);
+
+/*
+	Description:	Return whether or not a string is a valid identifier
+	Pre:			Valid String
+	Post:			Returned value will say if the input is a valid identifier
+	Parameters:		
+					input: char array to check
+*/
+bool isIdentifier(const char[]);
