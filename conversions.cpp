@@ -14,21 +14,9 @@ using namespace std;
 */
 
 void int2str(int, char[], int);
+void int2str(int, char[], int, int);
 void addCharToStr(char, char[], int);
 int char2int(char);
-
-void int2str(int input, char output[]) {
-
-	int length = 1; //Number of digits in the input
-
-	if (input < 0) {
-		addCharToStr('-', output, MAX_INT_STRING_LENGTH);
-		input = abs(input);
-	}
-
-	length = log10(input);
-	int2str(input, output, pow(10, length));
-}
 
 /*
 	Description:	Convert an integer into a string
@@ -40,17 +28,17 @@ void int2str(int input, char output[]) {
 					output: char array to insert characters into
 					position: 10^(value of first digit in input)
 */
-void int2str(int input, char output[], int position) {
+void int2str(int input, char output[], int position, int strLength) {
 	char temp = ' '; //Temporary char to hold the ascii value of the first digit of the passed input
 	position = max(position, 1); //Prevents dividing by 0
 	temp = (input / position) + ASCII_0; //Sets temp equal to the ascii code the first digit
-	addCharToStr(temp, output, MAX_INT_STRING_LENGTH); //Add temp to the end of the output string
+	addCharToStr(temp, output, strLength); //Add temp to the end of the output string
 	input %= position; //Remove the first digit from input
 	position /= 10; //Move one digit lower
 
 	//Repeat as long as we still have more digits to concatenate
 	if (position != 0) {
-		int2str(input, output, position);
+		int2str(input, output, position, strLength);
 	}
 }
 
@@ -72,18 +60,28 @@ int str2int(const char input[]) {
 }
 
 void double2str(double input, char output[]) {
-	int power = 0, sign = 1;
+	int beforeDec = 0; // Numbers before decimal place
+	int digBeforeDec = 0; // Number of digits before the decimal place
+	double afterDec = 0; // Numbers after decimal place
+
+	// Add negative sign if necessary
 	if (input < 0.0) {
-		input = -input;
-		
+		input = abs(input);
+		addCharToStr('-', output, MAX_DOUBLE_STRING_LENGTH);
 	}
-	while ((input < 1.0) || (input > 10.0)) {
-		if (input < 1.0) {
 
-		}
-		else {
+	beforeDec = input;
+	afterDec = input - (double)beforeDec;
 
-		}
+	int2str(beforeDec, output, MAX_DOUBLE_STRING_LENGTH); // Add numbers before decimal place to string
+	addCharToStr('.', output, MAX_DOUBLE_STRING_LENGTH); // Add decimal place to string
+
+	digBeforeDec = max((int)(log10(input) + 1), 1);
+
+	for (int i = digBeforeDec; i < MAX_DOUBLE_STRING_LENGTH - 2; i++) {
+		afterDec *= 10;
+		addCharToStr((int)afterDec + ASCII_0, output, MAX_DOUBLE_STRING_LENGTH);
+		afterDec -= (int)afterDec;
 	}
 }
 
@@ -125,4 +123,21 @@ int char2int(char input) {
 		return input - ASCII_0;
 	}
 	return 0;
+}
+
+void int2str(int input, char output[]) {
+	int2str(input, output, MAX_INT_STRING_LENGTH);
+}
+
+void int2str(int input, char output[], int strLength) {
+
+	int length = 1; //Number of digits in the input
+
+	if (input < 0) {
+		addCharToStr('-', output, strLength);
+		input = abs(input);
+	}
+
+	length = log10(input);
+	int2str(input, output, pow(10, length), strLength);
 }

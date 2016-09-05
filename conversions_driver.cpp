@@ -4,16 +4,16 @@ using namespace std;
 #include "conversions.h"
 
 int main() {
-	char temp[MAX_INT_STRING_LENGTH] = "";
-	int conv;	
+	char temp[MAX_DOUBLE_STRING_LENGTH] = "";
+	double conv;	
 
 	while (true) {
-		conv = 0;
+		conv = 0.0;
 		temp[0]='\0';
 		cin >> conv;
-		conv = (int)conv;
+		conv = conv;
 		cin.clear();
-		int2str(conv, temp);
+		double2str(conv, temp);
 
 		cout << "String: " << temp << endl;		
 	}

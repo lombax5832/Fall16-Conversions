@@ -8,9 +8,9 @@
 *	Date Modified:	9/3/16
 */
 
-// Maximum amount of characters need to store an integer or double, including null char & sign
+// Maximum amount of characters need to store an integer or double, including null char, sign & decimal
 const int MAX_INT_STRING_LENGTH = 12;
-const int MAX_DOUBLE_STRING_LENGTH = 25;
+const int MAX_DOUBLE_STRING_LENGTH = 20;
 // ASCII value of 0 and 9
 const int ASCII_0 = 48;
 const int ASCII_9 = 57;
