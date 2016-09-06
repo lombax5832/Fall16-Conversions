@@ -20,13 +20,15 @@ int main() {
 	//Testing str2int
 	cout << "Enter a string to convert to an integer: ";
 	cin >> strToInt;
-	cout << fixed << setprecision(10) << "String -> Integer: " << str2int(strToInt) << endl;
+	cout << fixed << setprecision(10) << "String -> Integer: " 
+		<< str2int(strToInt) << endl;
 	cin.clear();
 	
 	//Testing str2double
 	cout << "Enter a string to convert to a double: ";
 	cin >> strToDouble;
-	cout << fixed << setprecision(10) << "String -> Double: " << str2double(strToDouble) << endl;
+	cout << fixed << setprecision(10) << "String -> Double: " 
+		<< str2double(strToDouble) << endl;
 	cin.clear();
 
 	//Testing int2str

@@ -24,14 +24,15 @@ bool checkIdentifierFirstChar(char);
 	Description:	Convert an integer into a string
 	Pre:			Valid Positive Integer
 					Sufficiently Large char Array
-	Post:			Char array will be a string that prints the same text as given int
+	Post:			Char array will be a string that prints the same text 
+					as given int
 	Parameters:		
 					input: int to convert to string
 					output: char array to insert characters into
 					position: 10^(value of first digit in input)
 */
 void int2str(int input, char output[], int position, int strLength) {
-	char temp = ' '; //Temporary char to hold the ascii value of the first digit of the passed input
+	char temp = ' '; //Temporary char to hold the ascii value of the first digit of the input
 	position = max(position, 1); //Prevents dividing by 0
 	temp = (input / position) + ASCII_0; //Sets temp equal to the ascii code the first digit
 	addCharToStr(temp, output, strLength); //Add temp to the end of the output string
@@ -83,7 +84,7 @@ void double2str(double input, char output[]) {
 	//Now, subtract beforeDec from input, which will only get rid of numbers after decimal point
 	afterDec = input - (double)beforeDec;
 
-	int2str(beforeDec, output, MAX_DOUBLE_STRING_LENGTH); //Add numbers before decimal place to string
+	int2str(beforeDec, output, MAX_DOUBLE_STRING_LENGTH); //Add numbers before decimal to string
 	addCharToStr('.', output, MAX_DOUBLE_STRING_LENGTH); //Add decimal place to string
 
 	//We use the based ten logarithm function to get the number of digits in a number
@@ -102,7 +103,7 @@ double str2double(const char input[]) {
 	int sign = 1; //Current sign value of the double
 	int tempInt = 0; //Each decimal value we are adding separately
 
-	//If the string has a negative sign in the first index, it is a negative
+	//If the string has a negative sign in the first index, it is negative
 	if (input[0] == '-') {
 		sign = -sign;
 	}
@@ -138,7 +139,8 @@ bool isIdentifier(const char input[]) {
 
 	//Every other letter must be a number, letter, or underscore
 	while (input[i] != '\0') {
-		if (!checkIdentifierFirstChar(input[i]) && !(char2int(input[i]) != -1)) {
+		if (!checkIdentifierFirstChar(input[i]) && 
+			!(char2int(input[i]) != -1)) {
 			return false;
 		}
 		i++;
@@ -226,7 +228,8 @@ int strCharLocation(const char input[], char comparison, int length) {
 /*
 	Description:	Check to see if the given char is a valid first char in an identifier
 	Pre:			initialized char
-	Post:			Returns true or false based on if the char is a valid first char in an identifier
+	Post:			Returns true or false based on if the char is a valid first char 
+					in an identifier
 	Parameters:		
 					input: char to validate for being the first char in an identifier
 */
