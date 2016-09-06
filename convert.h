@@ -5,7 +5,7 @@
 *	Description:	Module used to convert integers and doubles into strings,
 *					also to see if a string is a valid identifier
 *	Date Created:	9/3/16
-*	Date Modified:	9/3/16
+*	Date Modified:	9/5/16
 */
 
 // Maximum amount of characters need to store an integer or double, including null char, sign & decimal

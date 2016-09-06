@@ -2,7 +2,7 @@ using namespace std;
 #include<iostream>
 #include<cmath>
 #include<algorithm>
-#include "conversions.h"
+#include "convert.h"
 #include <string.h>
 
 /**
@@ -10,7 +10,7 @@ using namespace std;
 *	Description:	Module used to convert integers and doubles into strings,
 *					also to see if a string is a valid identifier
 *	Date Created:	9/3/16
-*	Date Modified:	9/3/16
+*	Date Modified:	9/4/16
 */
 
 void int2str(int, char[], int);
